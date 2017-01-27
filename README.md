@@ -1,5 +1,5 @@
 # Roz
-![logo](./docs/images/roz_32.svg) *always watching* ![logo](./docs/images/roz_32_reverse.svg)
+![logo](./docs/images/roz_32.png) *always watching* ![logo](./docs/images/roz_32_reverse.png)
 
 # Notes to self
 I have got the basics working. Maybe not the best architecture, but things are working. Here's the current flow:
