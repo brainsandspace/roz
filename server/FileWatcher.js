@@ -14,9 +14,12 @@ class FileWatcher {
     this.watcher = chokidar.watch(
       watchDirectory, 
       {
-        // ignore node_modules and git files
+        /** We are only concerned (for now at least) with changes the user manually made,
+         * so we ignore node_modules, git files, bundles output from webpack, and of course the file that is storing changes for Roz so you can play it back.
+         */
         ignored: [
           /roz_well\.txt/,
+          /.*\.bundle\.js/,
           /\.gitignore/,
           '**/node_modules/**',
           '**/.git/**'
@@ -35,8 +38,6 @@ class FileWatcher {
       this.doWatching();
     });
 
-    setInterval(() => { this.sendMessage('hey') },1000)
-
   }
 
   doWatching() {
@@ -47,6 +48,7 @@ class FileWatcher {
     this.watcher.on('change', async (filename, stats) => {
       // if the size of the file changed, the file definitely changed...
       if (stats.size !== this.fileHashes[filename].size) {
+        this.sendMessage(filename);
 
         // update the fileHashes object
         const hash = await getHash(filename);
@@ -60,6 +62,8 @@ class FileWatcher {
         if (hash !== this.fileHashes[filename].hash) {
           // the file has changed
           this.fileHashes[filename] = { hash, size: stats.size };
+          this.sendMessage(filename);
+
         } else {
           // the file has not changed
         }
@@ -87,19 +91,15 @@ class FileWatcher {
 
   addClient(id, ws) {
     this.socketConnections[id] = ws;
-    console.log('added client', Object.keys(this.socketConnections).length)
   }
 
   removeClient(id) {
-    console.log('removing client, length before', Object.keys(this.socketConnections).length);
-    console.log(this.socketConnections[id])
     delete this.socketConnections[id];
-    console.log('length after', Object.keys(this.socketConnections).length)
   }
 
   sendMessage(msg) {
     for (let connection in this.socketConnections) {
-      this.socketConnections[connection].send(`a message${Math.random()}`);
+      this.socketConnections[connection].send(msg);
     }
   }
 
