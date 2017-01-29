@@ -10,7 +10,7 @@
     "build-server": "webpack --config ./server/webpack.config.js --progress",
     "start-server": "node ./server/server.bundle.js %npm_package_config_watch_folder%",
     "build-client": "webpack --config ./client/webpack.config.js --progress",
-    "start-client": "webpack-dev-server --config ./client/webpack.config.js --progress --hot --port 1234 --host 0.0.0.0",
+    "start-client": "webpack-dev-server --config ./client/webpack.config.js --progress --hot --port 4321 --host 0.0.0.0",
     "test": "jest"
   },
   "author": "David Baker",
@@ -29,6 +29,8 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-0": "^6.16.0",
     "chokidar": "^1.6.1",
+    "crypto": "0.0.3",
+    "express": "^4.14.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "webpack": "^2.2.0-rc.7",

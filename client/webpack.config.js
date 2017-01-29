@@ -1,7 +1,7 @@
 /** Config for the client which uses webpack */
 
-// const webpack = require('webpack');
 const path = require('path');
+// const fs = require('fs');
 
 module.exports = {
 
