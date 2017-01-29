@@ -26,5 +26,9 @@ module.exports = {
 
   target: 'node',
 
+  node: {
+    __dirname: true
+  },
+
   devtool: 'cheap-module-eval-source-map'
 }

@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import FileWatcher from './FileWatcher.js';
 /** Tell the user their local IP address where they can point other devices to. */
@@ -9,12 +10,15 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 const Gun = require('gun/gun');
 
 const server = express();
+server.use(express.static(__dirname + '/../public'));
+
 server.listen(1234, '0.0.0.0', () => {
   console.log('listening on localhost:1234');
 })
 
 server.get('/', (req, res) => {
-  res.sendFile('../client/index.html')
+  console.log(__dirname)
+  res.sendFile('index.html', { root: path.resolve(`${__dirname}/../public`) });
 })
 
 
