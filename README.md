@@ -22,4 +22,4 @@ I have got the basics working. Maybe not the best architecture, but things are w
 - [ ] adjust package.json to be mac compatible (currently uses %...% notation for get config variable, which is Windows only)
 - [ ] there is currently an issue with chokidar when deleting an empty directory
   - see [issue on Github](https://github.com/paulmillr/chokidar/issues/566)
-- [ ] get webpack working for server file so I can use babel (and then use async await)
+- [x] get webpack working for server file so I can use babel (and then use async await)
