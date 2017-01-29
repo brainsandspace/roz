@@ -9,7 +9,6 @@
   "scripts": {
     "start": "node ./server/server.bundle.js %npm_package_config_watch_folder%",
     "build-server": "webpack --config ./server/webpack.config.js --progress",
-
     "build-client": "webpack --config ./client/webpack.config.js --progress",
     "start-client": "webpack-dev-server --config ./client/webpack.config.js --progress --hot --port 4321 --host 0.0.0.0",
     "test": "jest"

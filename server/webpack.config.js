@@ -27,8 +27,9 @@ module.exports = {
   target: 'node',
 
   node: {
-    __dirname: true
+    __dirname: true,
+    fs: 'empty'
   },
-
+  // resolve: { alias: { 'socket.io-client': path.join( __dirname, '../node_modules', 'socket.io-client', 'socket.io.js' ) } },
   devtool: 'cheap-module-eval-source-map'
 }
