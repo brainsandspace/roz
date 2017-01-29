@@ -9,6 +9,7 @@ class FileWatcher {
   constructor(watchDirectory) {
     this.watchDirectory = watchDirectory;
     this.fileHashes = {};
+    this.socketConnections = {};
 
     this.watcher = chokidar.watch(
       watchDirectory, 
@@ -33,6 +34,8 @@ class FileWatcher {
     this.watcher.on('ready', () => {
       this.doWatching();
     });
+
+    setInterval(() => { this.sendMessage('hey') },1000)
 
   }
 
@@ -80,6 +83,24 @@ class FileWatcher {
       }
     );
 
+  }
+
+  addClient(id, ws) {
+    this.socketConnections[id] = ws;
+    console.log('added client', Object.keys(this.socketConnections).length)
+  }
+
+  removeClient(id) {
+    console.log('removing client, length before', Object.keys(this.socketConnections).length);
+    console.log(this.socketConnections[id])
+    delete this.socketConnections[id];
+    console.log('length after', Object.keys(this.socketConnections).length)
+  }
+
+  sendMessage(msg) {
+    for (let connection in this.socketConnections) {
+      this.socketConnections[connection].send(`a message${Math.random()}`);
+    }
   }
 
 }
