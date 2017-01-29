@@ -14,7 +14,8 @@ files.forEach(fileString => {
 
 
 // using native websockets in the browser
-var ws = new WebSocket('ws://localhost:1234');
+console.log('window.location.href', window.location.href)
+var ws = new WebSocket(`ws://${window.location.hostname}:5678`);
 
 ws.addEventListener('open', evt => {
     console.log('open evt', evt);
