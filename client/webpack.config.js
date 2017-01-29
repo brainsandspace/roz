@@ -9,7 +9,7 @@ module.exports = {
 
   output: {
     filename: 'client.bundle.js',
-    path: path.resolve(__dirname, '../dist')
+    path: path.resolve(__dirname, './')
   },
 
   module: {
@@ -52,7 +52,7 @@ module.exports = {
 
   
   devServer: {
-    contentBase: path.resolve(__dirname, '../dist')
+    contentBase: path.resolve(__dirname, './')
   },
 
   devtool: 'cheap-module-eval-source-map'

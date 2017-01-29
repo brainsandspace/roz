@@ -1,3 +1,3 @@
 module.exports = {
-  boop: "boasfdp"
+  bebop: "boasfdp"
 }

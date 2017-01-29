@@ -14,9 +14,12 @@ I have got the basics working. Maybe not the best architecture, but things are w
 ## TODO
 **among many others**
 - [ ] parse roz_well.txt
-- [ ]d3 integration for all kinds of visualization
+- [ ] d3 integration for all kinds of visualization
 - [ ] see what other stats chokidar might provide
 - [ ] search for require and import statements to build dependency graph
 - [ ] package everything up into an npm package, probably
   - possibly a VS Code extension, but probably not
-- [ ] sleep
+- [ ] adjust package.json to be mac compatible (currently uses %...% notation for get config variable, which is Windows only)
+- [ ] there is currently an issue with chokidar when deleting an empty directory
+  - see [issue on Github](https://github.com/paulmillr/chokidar/issues/566)
+- [ ] get webpack working for server file so I can use babel (and then use async await)
