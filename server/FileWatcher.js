@@ -43,38 +43,7 @@ class FileWatcher {
       // eg '/Development-B/Roz/client/index.js' becomes 'client/index.js'
       const relFilename = filename.replace(`${this.watchDirectory}/`, '');
 
-      console.log('filename', filename);
-      console.log('relfilename', relFilename)
-      console.log('this.watchDirectory', this.watchDirectory)
-
-      let parentDir = this.dirObject;
-      let subDir;
-      let remainingString = relFilename;
-      // while (remainingString.indexOf('/') >= 0) {
-        
-        // const subDir = relFilename.match(/([^\/]*)\//)[1];
-        // const remainingString = relFilename.replace(`${subDir}/`, '');
-
-
-        
-        this.dirObject = this.pathToObj(parentDir, remainingString);
-        // console.log('subDir', subDir);
-        // console.log('remainingString', remainingString);
-        // if (subDir !== null) { 
-        //   if (parentDir[subDir]) { }
-        //   else {
-        //     parentDir[subDir] = {}
-        //   }
-        //   parentDir = parentDir[subDir];
-        // }
-        // else {
-        //   console.log('about to break', parentDir, remainingString)
-        //   parentDir[remainingString] = { size: stats.size };
-        // }
-        // console.log('remainingString', remainingString);
-      // }
-      // this.dirObject[relFilename] = {}
-      console.log('dirObject')
+      this.dirObject = this.pathToObj(this.dirObject, relFilename, stats.size);
       console.log(prettyjson.render(this.dirObject))
     }); 
 
@@ -90,29 +59,24 @@ class FileWatcher {
   pathToObj(parentDir, str) {
     const dirMatch = str.match(/([^\/]*)\//); 
     let subDir;
+
     if (dirMatch) { subDir = dirMatch[1]; }
     else { 
       parentDir[str] = { size: 0 }
       return parentDir;
     }
-    const remainingString = str.replace(`${subDir}/`, '');
 
-    console.log('sd, rs', subDir, remainingString)
+    const remainingString = str.replace(`${subDir}/`, '');
 
     if (remainingString.indexOf('/') > 0) {
       if (!parentDir[subDir]) { parentDir[subDir] = this.pathToObj({}, remainingString); }
       else                    { parentDir[subDir] = this.pathToObj(parentDir[subDir], remainingString); }
       return parentDir;
-      // return [subDir, str.replace(`${subDir}/`, '')];
     } else {
-      console.log(parentDir);
       if (!parentDir) parentDir = {}
       if (!parentDir[subDir]) parentDir[subDir] = {}
       parentDir[subDir][remainingString] = { size: 0 }
       return parentDir 
-            // console.log('remaining string', remainingString);
-      // parentDir[remainingString] = { size: 0 };
-      // return { size: 0 } };
     }
   }
 
