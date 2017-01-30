@@ -1,6 +1,5 @@
 
 // using native websockets in the browser
-console.log('window.location.href', window.location.href)
 var ws = new WebSocket(`ws://${window.location.hostname}:5678`);
 
 ws.addEventListener('open', evt => {

@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path'
 import chokidar from 'chokidar';
+import prettyjson from 'prettyjson';
 import getHash from './utils/getHash.js';
-
 
 class FileWatcher {
 /** the directory being watched */
@@ -10,6 +10,7 @@ class FileWatcher {
     this.watchDirectory = watchDirectory;
     this.fileHashes = {};
     this.socketConnections = {};
+    this.dirObject = {};
 
     this.watcher = chokidar.watch(
       watchDirectory, 
@@ -32,12 +33,87 @@ class FileWatcher {
     this.watcher.on('add', async (filename, stats) => {
       const hash = await getHash(filename);
       this.fileHashes[filename] = { hash, size: stats.size};
+
+      // Windows uses back slashes in paths, so let's correct for that
+      console.log('filename before', filename);
+      filename = filename.replace(/\\/g, '/');
+      console.log('filename after', filename);
+
+      // shortened path that is relative to the root watch directory
+      // eg '/Development-B/Roz/client/index.js' becomes 'client/index.js'
+      const relFilename = filename.replace(`${this.watchDirectory}/`, '');
+
+      console.log('filename', filename);
+      console.log('relfilename', relFilename)
+      console.log('this.watchDirectory', this.watchDirectory)
+
+      let parentDir = this.dirObject;
+      let subDir;
+      let remainingString = relFilename;
+      // while (remainingString.indexOf('/') >= 0) {
+        
+        // const subDir = relFilename.match(/([^\/]*)\//)[1];
+        // const remainingString = relFilename.replace(`${subDir}/`, '');
+
+
+        
+        this.dirObject = this.pathToObj(parentDir, remainingString);
+        // console.log('subDir', subDir);
+        // console.log('remainingString', remainingString);
+        // if (subDir !== null) { 
+        //   if (parentDir[subDir]) { }
+        //   else {
+        //     parentDir[subDir] = {}
+        //   }
+        //   parentDir = parentDir[subDir];
+        // }
+        // else {
+        //   console.log('about to break', parentDir, remainingString)
+        //   parentDir[remainingString] = { size: stats.size };
+        // }
+        // console.log('remainingString', remainingString);
+      // }
+      // this.dirObject[relFilename] = {}
+      console.log('dirObject')
+      console.log(prettyjson.render(this.dirObject))
     }); 
 
     this.watcher.on('ready', () => {
       this.doWatching();
     });
 
+  }
+
+  /**
+   * takes in an object and a string
+   */
+  pathToObj(parentDir, str) {
+    const dirMatch = str.match(/([^\/]*)\//); 
+    let subDir;
+    if (dirMatch) { subDir = dirMatch[1]; }
+    else { 
+      parentDir[str] = { size: 0 }
+      return parentDir;
+    }
+    const remainingString = str.replace(`${subDir}/`, '');
+
+    console.log('sd, rs', subDir, remainingString)
+
+    if (remainingString.indexOf('/') > 0) {
+      if (!parentDir[subDir]) { parentDir[subDir] = this.pathToObj({}, remainingString); }
+      else                    { parentDir[subDir] = this.pathToObj(parentDir[subDir], remainingString); }
+      return parentDir;
+      // return [subDir, str.replace(`${subDir}/`, '')];
+    } else {
+      console.log(parentDir);
+      if (!parentDir) parentDir = {}
+      if (!parentDir[subDir]) parentDir[subDir] = {}
+      parentDir[subDir][remainingString] = { size: 0 }
+      return parentDir 
+            // console.log('remaining string', remainingString);
+      // parentDir[remainingString] = { size: 0 };
+      // return { size: 0 } };
+    }
   }
 
   doWatching() {

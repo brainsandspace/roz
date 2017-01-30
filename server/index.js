@@ -49,12 +49,9 @@ wss.on('connection', (ws) => {
     const location = url.parse(ws.upgradeReq.url, true);
 
     const id = require('uuid/v1')();
-    console.log('new id', id)
 
     watchdog.addClient(id, ws);
     
-    ws.send('Hello new client!');
-
     ws.on('message', (message) => {
         console.log(`received: ${message}`);
     });
