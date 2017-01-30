@@ -1,3 +1,5 @@
+// this is the zoomable circle packing example
+
 import * as d3 from 'd3';
 
 const visualization = (obj) => {
