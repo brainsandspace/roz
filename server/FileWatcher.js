@@ -56,26 +56,26 @@ class FileWatcher {
   /**
    * takes in an object and a string
    */
-  pathToObj(parentDir, str) {
+  pathToObj(parentDir, str, size) {
     const dirMatch = str.match(/([^\/]*)\//); 
     let subDir;
 
     if (dirMatch) { subDir = dirMatch[1]; }
     else { 
-      parentDir[str] = { size: 0 }
+      parentDir[str] = { size }
       return parentDir;
     }
 
     const remainingString = str.replace(`${subDir}/`, '');
 
     if (remainingString.indexOf('/') > 0) {
-      if (!parentDir[subDir]) { parentDir[subDir] = this.pathToObj({}, remainingString); }
-      else                    { parentDir[subDir] = this.pathToObj(parentDir[subDir], remainingString); }
+      if (!parentDir[subDir]) { parentDir[subDir] = this.pathToObj({}, remainingString, size); }
+      else                    { parentDir[subDir] = this.pathToObj(parentDir[subDir], remainingString, size); }
       return parentDir;
     } else {
       if (!parentDir) parentDir = {}
       if (!parentDir[subDir]) parentDir[subDir] = {}
-      parentDir[subDir][remainingString] = { size: 0 }
+      parentDir[subDir][remainingString] = { size }
       return parentDir 
     }
   }
@@ -88,7 +88,7 @@ class FileWatcher {
     this.watcher.on('change', async (filename, stats) => {
       // if the size of the file changed, the file definitely changed...
       if (stats.size !== this.fileHashes[filename].size) {
-        this.sendMessage(filename);
+        this.broadcast(filename);
 
         // update the fileHashes object
         const hash = await getHash(filename);
@@ -102,7 +102,7 @@ class FileWatcher {
         if (hash !== this.fileHashes[filename].hash) {
           // the file has changed
           this.fileHashes[filename] = { hash, size: stats.size };
-          this.sendMessage(filename);
+          this.broadcast(filename);
 
         } else {
           // the file has not changed
@@ -131,13 +131,14 @@ class FileWatcher {
 
   addClient(id, ws) {
     this.socketConnections[id] = ws;
+    ws.send(JSON.stringify({ dirObject: this.dirObject }));
   }
 
   removeClient(id) {
     delete this.socketConnections[id];
   }
 
-  sendMessage(msg) {
+  broadcast(msg) {
     for (let connection in this.socketConnections) {
       this.socketConnections[connection].send(msg);
     }

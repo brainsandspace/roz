@@ -10,7 +10,6 @@
     "start": "node ./server/server.bundle.js %npm_package_config_watch_folder%",
     "build-server": "webpack --watch --config ./server/webpack.config.js --progress",
     "build-client": "webpack --watch --config ./client/webpack.config.js --progress",
-
     "test": "jest"
   },
   "author": "David Baker",
@@ -30,6 +29,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "chokidar": "^1.6.1",
     "crypto": "0.0.3",
+    "d3": "^4.5.0",
     "express": "^4.14.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
