@@ -37,6 +37,8 @@ const visualization = (obj) => {
         .style("fill", function(d) { return d.children ? color(d.depth) : null; })
         .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
 
+    console.log('working circle', circle);
+
     var text = g.selectAll("text")
       .data(nodes)
       .enter().append("text")
