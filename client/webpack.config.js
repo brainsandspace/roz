@@ -23,11 +23,11 @@ module.exports = {
       {
         test: /\.txt$/,
         use: 'raw-loader'
-      }
-      // {
-      //   test: /\.s?css/,
-      //   loaders: ['style-loader', 'css-loader', 'sass-loader']
-      // },
+      },
+      {
+        test: /\.s?css/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
+      },
       // {
       //   test: /.*\.(gif|png|jpe?g|svg)$/i,
       //   loaders: [

@@ -131,7 +131,7 @@ class FileWatcher {
 
   addClient(id, ws) {
     this.socketConnections[id] = ws;
-    ws.send(JSON.stringify({ dirObject: this.dirObject }));
+    ws.send(JSON.stringify({ initialDirObject: this.dirObject }));
   }
 
   removeClient(id) {
@@ -140,7 +140,7 @@ class FileWatcher {
 
   broadcast(msg) {
     for (let connection in this.socketConnections) {
-      this.socketConnections[connection].send(msg);
+      this.socketConnections[connection].send(JSON.stringify({ msg }));
     }
   }
 
