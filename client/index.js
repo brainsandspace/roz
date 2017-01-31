@@ -15,26 +15,43 @@ ws.addEventListener('open', evt => {
   ws.send('Hello Server');
 });
 
-let dirObject;
+let dirObject,
+    objectHierarchy;
 ws.addEventListener('message', evt => {
   console.log('message from server:', evt.data);
 
   const data = JSON.parse(evt.data);
 
-  if (Object.keys(data)[0] === 'initialDirObject') {
+  switch (Object.keys(data)[0]) {
 
-    dirObject = data.initialDirObject;
+    case 'initialDirObject':
+      dirObject = data.initialDirObject;
+      const options = {
+        diminishMedia:    true,
+        diminishBundle:   true, 
+        diminishMin:      true, 
+        diminishDS_Store: true,
+      };
+      objectHierarchy = obj2hierarchy(dirObject, null, options);
+      circlePack(objectHierarchy);
+      break;
 
-    // const rootEl = obj2dom(dirObject, 'svg', 'g');
-    // document.body.querySelector('svg').appendChild(rootEl);
-    const options = {
-      diminishMedia:    true,
-      diminishBundle:   true, 
-      diminishMin:      true, 
-      diminishDS_Store: true,
-    };
-    const objectHierarchy = obj2hierarchy(dirObject, diminishMedia, diminishBundle, diminishMin);
-    circlePack(objectHierarchy);
-}
+    case 'change': 
+      console.log('this is a change', data, data);
+      let id = data.change.replace('.', 'DOT');
 
+      id = id.match(/([^/]*\/[^/]*$)/g) ? id.match(/([^/]*\/[^/]*$)/g)[0] : id;
+
+      id =  id.replace('\/', 'SLASH');
+
+      console.log('id', id);
+      document.querySelector(`#${id}`).style.fill = 'url(#eyeGradient)';
+      // document.querySelector(`#${id}`).style.filter = 'url(#specular)';
+             // .append('circle')
+      break;
+
+    default: break;
+  }
 });
+
+// window.addEventListener('resize', () => { circlePack(objectHierarchy)})

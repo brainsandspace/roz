@@ -56,13 +56,13 @@ const obj2hierarchy = (obj, parent = null, options = {
       if (Object.keys(val).indexOf('size') >= 0) {
         
         // hide the size of the media files if that option is set        
-        if (options.diminishMedia && key.match(/\.png|\.jpg|\.svg|\.mp4|\.webm|\.ogv/i)) val.size = 1;
+        if (options.diminishMedia && key.match(/\.png|\.jpg|\.svg|\.ico|\.mp4|\.webm|\.ogv/i)) val.size = 1;
 
         // hide the size of bundled files if that option is set
         if (options.diminishBundle && key.match(/.*bundle\.js/)) val.size = 1;
 
         // hide the size of minified files if that option is set
-        if (options.diminishBundle && key.match(/.*min\.js/)) val.size = 1;
+        if (options.diminishBundle && key.match(/.*\.min\..*/)) val.size = 1;
 
         if (options.diminishDS_Store && key.match(/\.ds_store/i)) val.size = 1;
 

@@ -6,11 +6,12 @@ const circlePack = (objHierarchy) => {
   const svg = d3.select('svg');
   const margin = 20;
   const diameter = parseInt(svg.attr('width'));
+  console.log('diameter', svg.attr('width'))
   const g = svg.append('g').attr('transform', `translate(${diameter/2}, ${diameter/2})`);
 
   const color = d3.scaleLinear()
-                  .domain([-5, 5])
-                  .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+                  .domain([0, 5])
+                  .range(["hsl(70, 78%, 75%)", "hsl(85, 67%, 46%)"])
                   .interpolate(d3.interpolateHcl);
   console.log('color', color);
 
@@ -37,6 +38,7 @@ const circlePack = (objHierarchy) => {
                   .data(nodes)
                   .enter().append('circle')
                   .attr('class', d => {
+                    console.log('d.parent', d.parent)
                     let cl = d.parent ? d.children ? 'node' : 'node node--leaf' : 'node node--root';
 
                     // if the file is an image or other kind of multimedia, we want to at least change the color of it so we know it isn't that vital to the codebase
@@ -46,6 +48,12 @@ const circlePack = (objHierarchy) => {
                     if (!d.children && d.data.name.match(/.*bundle\.js/)) cl = `${cl} bundle`;
                     
                     return cl;
+                  })
+                  // Set the id of the circle if it is a leaf. 
+                  // Be aware that css can't handle periods and escaping them was giving me problems, so I replace period with "dot"
+                  .attr('id', d => {
+                    return !d.children && d.parent.data.name === 'root' ? `${d.data.name.replace('.', 'DOT')}` :
+                           !d.children && d.parent.data.name !== 'root' ? `${d.parent.data.name.replace('.', 'DOT')}SLASH${d.data.name.replace('.', 'DOT')}` : null
                   })
                   .style('fill', d => d.children ? color(d.depth) : null )
                   .on('click', d => { if (focus !== d) {
@@ -63,7 +71,7 @@ const circlePack = (objHierarchy) => {
   
   const node = g.selectAll('circle,text');
 
-  svg.style('background', color(-1))
+  svg.style('background', '#fff')
      .on('click', () => { zoom(root); });
   
   zoomTo([root.x, root.y, root.r * 2 + margin]);

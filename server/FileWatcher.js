@@ -91,7 +91,8 @@ class FileWatcher {
     this.watcher.on('change', async (filename, stats) => {
       // if the size of the file changed, the file definitely changed...
       if (stats.size !== this.fileHashes[filename].size) {
-        this.broadcast(filename);
+        this.broadcast({ change: filename.replace(`${this.watchDirectory}/`, '') });        
+        // this.broadcast(filename);
 
         // update the fileHashes object
         const hash = await getHash(filename);
@@ -105,7 +106,10 @@ class FileWatcher {
         if (hash !== this.fileHashes[filename].hash) {
           // the file has changed
           this.fileHashes[filename] = { hash, size: stats.size };
-          this.broadcast(filename);
+          // this.broadcast(filename);
+          // this.broadcast(pathToObj({},filename));
+          this.broadcast({ change: filename.replace(`${this.watchDirectory}/`, '') });
+          
 
         } else {
           // the file has not changed
@@ -141,9 +145,9 @@ class FileWatcher {
     delete this.socketConnections[id];
   }
 
-  broadcast(msg) {
+  broadcast(obj) {
     for (let connection in this.socketConnections) {
-      this.socketConnections[connection].send(JSON.stringify({ msg }));
+      this.socketConnections[connection].send(JSON.stringify(obj));
     }
   }
 
