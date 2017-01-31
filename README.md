@@ -1,6 +1,8 @@
 # Roz
 ![logo](./docs/images/roz_32.png) *always watching* ![logo](./docs/images/roz_32_reverse.png)
 
+
+
 # Notes to self
 I have got the basics working. Maybe not the best architecture, but things are working. Here's the current flow:
 - "server" (which I should rename to just roz) watches a folder of your choosing, which you currently set in the file but I should extract that and make it an argument you pass in. From terminal,
@@ -19,7 +21,9 @@ I have got the basics working. Maybe not the best architecture, but things are w
 - [ ] search for require and import statements to build dependency graph
 - [ ] package everything up into an npm package, probably
   - possibly a VS Code extension, but probably not
-- [ ] adjust package.json to be mac compatible (currently uses %...% notation for get config variable, which is Windows only)
+- [ ] adjust package.json to be OS agnostic
+  - Windows `%npm_package_config_watch_folder%`
+  - Mac `$npm_package_config_watch_folder`
 - [ ] there is currently an issue with chokidar when deleting an empty directory
   - see [issue on Github](https://github.com/paulmillr/chokidar/issues/566)
 - [x] get webpack working for server file so I can use babel (and then use async await)

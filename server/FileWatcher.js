@@ -35,20 +35,23 @@ class FileWatcher {
       this.fileHashes[filename] = { hash, size: stats.size};
 
       // Windows uses back slashes in paths, so let's correct for that
-      console.log('filename before', filename);
+      // console.log('filename before', filename);
       filename = filename.replace(/\\/g, '/');
-      console.log('filename after', filename);
+      // console.log('filename after', filename);
 
       // shortened path that is relative to the root watch directory
       // eg '/Development-B/Roz/client/index.js' becomes 'client/index.js'
       const relFilename = filename.replace(`${this.watchDirectory}/`, '');
 
       this.dirObject = this.pathToObj(this.dirObject, relFilename, stats.size);
-      console.log(prettyjson.render(this.dirObject))
+      // console.log(prettyjson.render(this.dirObject))
+      console.log(filename)
     }); 
 
     this.watcher.on('ready', () => {
       this.doWatching();
+      console.log(prettyjson.render(this.dirObject))
+      
     });
 
   }

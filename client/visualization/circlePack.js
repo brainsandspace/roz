@@ -22,10 +22,10 @@ const circlePack = (objHierarchy) => {
 
   const root = d3.hierarchy(objHierarchy)
                   .sum(d => {
-                    console.log('d', d)
+                    console.log(d.size);
                     return d.size
                   })
-                  .sort((a, b) => { console.log('a,b', a, b); return b.value - a.value; });
+                  .sort((a, b) => b.value - a.value);
 
   console.log('root after root', root);
 
@@ -39,15 +39,19 @@ const circlePack = (objHierarchy) => {
                   .attr('class', d => {
                     let cl = d.parent ? d.children ? 'node' : 'node node--leaf' : 'node node--root';
 
-                    // if the file is an image, we want to at least change the color of it so we know it isn't that vital to the codebase
-                    if (!d.children && d.data.name.match(/\.png|\.jpg|\.svg/i)) cl = `${cl} image`;
+                    // if the file is an image or other kind of multimedia, we want to at least change the color of it so we know it isn't that vital to the codebase
+                    if (!d.children && d.data.name.match(/\.png|\.jpg|\.svg|\.mp4|\.webm|\.ogv/i)) cl = `${cl} media`;
+
+                    // if the file is a bundle, we should denote that differently also
+                    if (!d.children && d.data.name.match(/.*bundle\.js/)) cl = `${cl} bundle`;
+                    
                     return cl;
                   })
                   .style('fill', d => d.children ? color(d.depth) : null )
                   .on('click', d => { if (focus !== d) {
                     zoom(d);
                     d3.event.stopPropagation();
-                   }});
+                  }});
 
   const text = g.selectAll('text')
                 .data(nodes)

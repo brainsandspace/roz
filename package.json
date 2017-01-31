@@ -4,10 +4,10 @@
   "description": "always watching",
   "main": "./src/server.js",
   "config": {
-    "watch_folder": "/Development-B/Roz"
+    "watch_folder": "/Users/cfm3/Development/360-with-hotspots"
   },
   "scripts": {
-    "start": "node ./server/server.bundle.js %npm_package_config_watch_folder%",
+    "start": "node ./server/server.bundle.js $npm_package_config_watch_folder",
     "build-server": "webpack --watch --config ./server/webpack.config.js --progress",
     "build-client": "webpack --watch --config ./client/webpack.config.js --progress",
     "test": "jest"
@@ -19,6 +19,7 @@
     "css-loader": "^0.26.1",
     "hash-files": "^1.1.1",
     "node-sass": "^4.4.0",
+    "prettyjson": "^1.2.1",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.3.1",
     "sass-loader": "^4.1.1",

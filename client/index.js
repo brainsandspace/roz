@@ -27,12 +27,14 @@ ws.addEventListener('message', evt => {
 
     // const rootEl = obj2dom(dirObject, 'svg', 'g');
     // document.body.querySelector('svg').appendChild(rootEl);
-    
-    const objectHierarchy = obj2hierarchy(dirObject);
+    const options = {
+      diminishMedia:    true,
+      diminishBundle:   true, 
+      diminishMin:      true, 
+      diminishDS_Store: true,
+    };
+    const objectHierarchy = obj2hierarchy(dirObject, diminishMedia, diminishBundle, diminishMin);
     circlePack(objectHierarchy);
-  
 }
-
-  
 
 });
