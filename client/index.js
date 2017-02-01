@@ -2,7 +2,7 @@ import visualization from './visualization.js';
 import obj2dom from './utils/obj2dom.js';
 import obj2hierarchy from './utils/obj2hierarchy.js';
 import circlePack from './fileStructureViz/circlePack.js';
-import cluster from './fileStructureViz/cluster.js';
+// // import forceGraph from './fileStructureViz/forceGraph.js';
 import mobileOrTablet from './utils/mobileOrTablet.js';
 import * as d3 from 'd3';
 import './utils/objectEntries.js'; // shim for es7 Object.entries
@@ -38,8 +38,8 @@ ws.addEventListener('message', evt => {
         diminishDS_Store: true,
       };
       objectHierarchy = obj2hierarchy(dirObject, null, options);
-      // circlePack(objectHierarchy);
-      cluster(objectHierarchy);
+      circlePack(objectHierarchy);
+      // cluster(objectHierarchy);
       break;
     
     case 'watchDirectory':

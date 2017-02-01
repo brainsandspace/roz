@@ -1,3 +1,5 @@
+# CURRENTLY ABANDONED AND BROKEN
+*I plan to cmoe back to it once I start actually using TDD practices. Then it has potential to actually be useful for me.*
 # Roz
 ![logo](./docs/images/roz_32.png) *always watching* ![logo](./docs/images/roz_32_reverse.png)
 
@@ -27,3 +29,6 @@ I have got the basics working. Maybe not the best architecture, but things are w
   - see [issue on Github](https://github.com/paulmillr/chokidar/issues/566)
 - [x] get webpack working for server file so I can use babel (and then use async await)
 - [ ] different behavior on mobile where you can more easily zoom by hand
+- [ ] 2 distinct modes
+  1. Flie Structure
+  1. Module Dependency Graph
