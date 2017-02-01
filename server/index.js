@@ -1,8 +1,11 @@
 import path from 'path';
 import url from 'url';
 import http from 'http';
+// import fs from 'fs';
+// import jsonfile from 'jsonfile';
+import json from './stats.json'
 import express from 'express';
-// import { uuidV1 } from 'uuid';
+import prettyjson from 'prettyjson';
 import FileWatcher from './FileWatcher.js';
 
 /** Tell the user their local IP address where they can point other devices to. */
@@ -68,4 +71,6 @@ server.listen(5678, '0.0.0.0', () => { console.log(`websocket server listening o
 
 
 
-
+console.log(prettyjson.render(json));
+// // console.log(JSON.parse(fs.readFileSync('./server/stats.json', 'utf8')));
+// console.log(jsonfile.readFileSync('./server/stats.json'))
