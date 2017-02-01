@@ -1,8 +1,11 @@
 import fs from 'fs';
 import path from 'path'
+import os from 'os';
 import chokidar from 'chokidar';
 import prettyjson from 'prettyjson';
 import getHash from './utils/getHash.js';
+
+const windows = os.type().toLowerCase().includes('windows');
 
 class FileWatcher {
 /** the directory being watched */
@@ -91,7 +94,7 @@ class FileWatcher {
     this.watcher.on('change', async (filename, stats) => {
       // if the size of the file changed, the file definitely changed...
       if (stats.size !== this.fileHashes[filename].size) {
-        this.broadcast({ change: filename.replace(`${this.watchDirectory}/`, '') });        
+        this.broadcast({ change: filename.replace(`${this.watchDirectory}${windows ? '\\' : '\/'}`, '') });        
         // this.broadcast(filename);
 
         // update the fileHashes object
@@ -106,9 +109,9 @@ class FileWatcher {
         if (hash !== this.fileHashes[filename].hash) {
           // the file has changed
           this.fileHashes[filename] = { hash, size: stats.size };
-          // this.broadcast(filename);
+          
           // this.broadcast(pathToObj({},filename));
-          this.broadcast({ change: filename.replace(`${this.watchDirectory}/`, '') });
+          this.broadcast({ change: filename.replace(`${this.watchDirectory}${windows ? '\\' : '\/'}`, '') });
           
 
         } else {
@@ -139,6 +142,7 @@ class FileWatcher {
   addClient(id, ws) {
     this.socketConnections[id] = ws;
     ws.send(JSON.stringify({ initialDirObject: this.dirObject }));
+    ws.send(JSON.stringify({ watchDirectory: this.watchDirectory }));
   }
 
   removeClient(id) {

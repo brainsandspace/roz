@@ -43,6 +43,7 @@ const obj2hierarchy = (obj, parent = null, options = {
   diminishMedia: false,
   diminishBundle: false, 
   diminishMin: false, 
+  diminishJSON: true, 
   diminishDS_Store: true,
 }) => {
   if (parent === null) parent = { name: 'root', children: [] };
@@ -57,6 +58,9 @@ const obj2hierarchy = (obj, parent = null, options = {
         
         // hide the size of the media files if that option is set        
         if (options.diminishMedia && key.match(/\.png|\.jpg|\.svg|\.ico|\.mp4|\.webm|\.ogv/i)) val.size = 1;
+
+        // hide the size of the json files if that option is set        
+        if (options.diminishJSON && key.match(/\.json/i)) val.size = 1;
 
         // hide the size of bundled files if that option is set
         if (options.diminishBundle && key.match(/.*bundle\.js/)) val.size = 1;

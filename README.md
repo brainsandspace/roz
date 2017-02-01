@@ -2,7 +2,6 @@
 ![logo](./docs/images/roz_32.png) *always watching* ![logo](./docs/images/roz_32_reverse.png)
 
 
-
 # Notes to self
 I have got the basics working. Maybe not the best architecture, but things are working. Here's the current flow:
 - "server" (which I should rename to just roz) watches a folder of your choosing, which you currently set in the file but I should extract that and make it an argument you pass in. From terminal,
@@ -27,3 +26,4 @@ I have got the basics working. Maybe not the best architecture, but things are w
 - [ ] there is currently an issue with chokidar when deleting an empty directory
   - see [issue on Github](https://github.com/paulmillr/chokidar/issues/566)
 - [x] get webpack working for server file so I can use babel (and then use async await)
+- [ ] different behavior on mobile where you can more easily zoom by hand

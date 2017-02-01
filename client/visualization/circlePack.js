@@ -1,19 +1,31 @@
 // circle packing based heavily on zoomable circle packing d3 example
 import * as d3 from 'd3';
+import mobileOrTablet from '../utils/mobileOrTablet.js';
 
 const circlePack = (objHierarchy) => {
+  // const myZoom = (node) => {
+  //   const transform = d3.zoomTransform(node);
+  //   d3.select('svg').attr('transform', `translate(${transform.x},${transform.y}) scale(${transform.k})`);
+  // }
    // my d3 stuff
-  const svg = d3.select('svg');
+  const svg = d3.select('svg')
+                // .append('svg')
+                // .attr('width', '1000px')
+                // .attr('height', '1000px')
+                // .call(myZoom)
+                /*().on("zoom", function () {
+                  svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+               
+               }))*/
+
   const margin = 20;
   const diameter = parseInt(svg.attr('width'));
-  console.log('diameter', svg.attr('width'))
   const g = svg.append('g').attr('transform', `translate(${diameter/2}, ${diameter/2})`);
 
   const color = d3.scaleLinear()
                   .domain([0, 5])
                   .range(["hsl(70, 78%, 75%)", "hsl(85, 67%, 46%)"])
                   .interpolate(d3.interpolateHcl);
-  console.log('color', color);
 
   // create a new pack layout with the default settings
   const pack = d3.pack()
@@ -22,13 +34,9 @@ const circlePack = (objHierarchy) => {
   
 
   const root = d3.hierarchy(objHierarchy)
-                  .sum(d => {
-                    console.log(d.size);
-                    return d.size
-                  })
+                  .sum(d => d.size)
                   .sort((a, b) => b.value - a.value);
 
-  console.log('root after root', root);
 
   let focus = root;
   const nodes = pack(root).descendants();
@@ -38,7 +46,6 @@ const circlePack = (objHierarchy) => {
                   .data(nodes)
                   .enter().append('circle')
                   .attr('class', d => {
-                    console.log('d.parent', d.parent)
                     let cl = d.parent ? d.children ? 'node' : 'node node--leaf' : 'node node--root';
 
                     // if the file is an image or other kind of multimedia, we want to at least change the color of it so we know it isn't that vital to the codebase
@@ -65,8 +72,17 @@ const circlePack = (objHierarchy) => {
                 .data(nodes)
                 .enter().append('text')
                 .attr('class', 'label')
-                .style('fill-opacity', d => d.parent === root ? 1 : 0)
-                .style('display', d => d.parent === root ? 'inline' : 'none')
+                .style('fill-opacity', d => {
+                  // if (mobileOrTablet) return 0.5;
+                  return d.parent === root ? 1 : 0
+                })
+                .style('display', d => {
+                  // if (mobileOrTablet) return 'inline';
+                  return d.parent === root ? 'inline' : 'none';
+                })
+                // .style('font-size', d => {
+                //   return mobileOrTablet && d.data.size ? d.data.size/100 : null;
+                // })
                 .text(d => d.data.name);
   
   const node = g.selectAll('circle,text');
