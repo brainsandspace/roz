@@ -33,3 +33,5 @@ I have got the basics working. Maybe not the best architecture, but things are w
 - [ ] 2 distinct modes
   1. Flie Structure
   1. Module Dependency Graph
+  
+  ![test](https://images-na.ssl-images-amazon.com/images/G/01/gno/sprites/nav-sprite-global_bluebeacon-1x_optimized._CB281044790_.png)
