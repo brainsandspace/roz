@@ -31,7 +31,6 @@ I have got the basics working. Maybe not the best architecture, but things are w
 - [x] get webpack working for server file so I can use babel (and then use async await)
 - [ ] different behavior on mobile where you can more easily zoom by hand
 - [ ] 2 distinct modes
-  1. Flie Structure
+  1. File Structure
   1. Module Dependency Graph
   
-  ![test](https://images-na.ssl-images-amazon.com/images/G/01/gno/sprites/nav-sprite-global_bluebeacon-1x_optimized._CB281044790_.png)
