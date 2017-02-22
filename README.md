@@ -1,5 +1,5 @@
 # CURRENTLY ABANDONED AND BROKEN
-*I plan to cmoe back to it once I start actually using TDD practices. Then it has potential to actually be useful for me.*
+*I plan to come back to it once I start actually using TDD practices. Then it has potential to actually be useful for me.*
 
 # Roz
 ![logo](./docs/images/roz_32.png) *always watching* ![logo](./docs/images/roz_32_reverse.png)
