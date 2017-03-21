@@ -14,22 +14,9 @@
   </head>
   <body>
     <script src='client.bundle.js'></script>
-    <svg width="1000" height="1000">
+    <svg id="mike" width="500" height="500">
       <defs>
         <filter id = "specular">
-          <feSpecularLighting result="specOut"
-              specularExponent="200" lighting-color="#bbbbbb">
-            <fePointLight x="50" y="75" z="20"/>
-          </feSpecularLighting>
-          <feComposite in="SourceGraphic" in2="specOut"
-              operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
-      </filter>
-        <!--<filter id="displacementFilter">
-          <feTurbulence type="turbulence" baseFrequency="0.05"
-              numOctaves="2" result="turbulence"/>
-          <feDisplacementMap in2="turbulence" in="SourceGraphic"
-              scale="5" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>-->
         <radialGradient id="eyeGradient">
           <stop offset="30%" stop-color="black"/>
           <stop offset="35%" stop-color="#084539"/>
@@ -37,6 +24,8 @@
           <stop offset="53%" stop-color="white"/>
         </radialGradient>
       </defs>
+    </svg>
+    <svg id="graph" width="500" height="500">
     </svg>
   </body>
 </html>

@@ -16,7 +16,7 @@
 
 .node--leaf {
   fill: white;
-  transition: fill 0.3s;
+  transition: fill 0.5s;
 }
 
 .label {
@@ -53,4 +53,11 @@
 .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+#graph .nodes circle {
+  pointer-events: all;
+  cursor: pointer;
+  stroke: none;
+  fill: steelblue;
 }
