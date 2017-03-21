@@ -101,3 +101,5 @@
 /media/david/DevDisk/Roz/client/graphViz.js
 /media/david/DevDisk/Roz/client/graphViz.js
 /media/david/DevDisk/Roz/client/graphViz.js
+/media/david/DevDisk/Roz/README.md
+/media/david/DevDisk/Roz/README.md
