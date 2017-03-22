@@ -1,6 +1,7 @@
 // import mikeViz from './mikeViz.js';
 import graphViz from './graphViz.js';
 import obj2dom from './utils/obj2dom.js';
+import obj2graph from './utils/obj2graph.js';
 import obj2hierarchy from './utils/obj2hierarchy.js';
 import circlePack from './fileStructureViz/circlePack.js';
 // // import forceGraph from './fileStructureViz/forceGraph.js';
@@ -21,7 +22,7 @@ ws.addEventListener('open', evt => {
 
 let dirObject, objectHierarchy, watchDirectory;
 
-const graph = { nodes: [], links: [] };
+let graph, fileTypes; // = { nodes: [], links: [] };
 let lastData;
 
 ws.addEventListener('message', evt => {
@@ -40,7 +41,12 @@ ws.addEventListener('message', evt => {
         diminishDS_Store: true,
       };
       objectHierarchy = obj2hierarchy(dirObject, null, options);
-      circlePack(objectHierarchy);
+      // circlePack(objectHierarchy);
+
+      console.log('obj2graph',obj2graph);
+      [fileTypes, graph] = obj2graph(dirObject);
+      console.log('dat graph', graph);
+      graphViz(fileTypes, graph);
 
       break;
 
@@ -50,21 +56,20 @@ ws.addEventListener('message', evt => {
       break;
 
     case 'change':
-      graph.nodes.push({id: data.change});
-      if (lastData) {
-        graph.links.push({source: lastData, target: data.change});
-      }
-      graphViz(graph);
-      lastData = data.change;
+      // if (lastData) {
+      //   graph.links.push({source: lastData, target: data.change});
+      // }
+      // graph.nodes.push({id: data.change});
+      // lastData = data.change;
 
-      console.log('this is a change', data, data);
-      let id = data.change.replace('.', 'DOT');
+      // console.log('this is a change', data, data);
+      // let id = data.change.replace('.', 'DOT');
 
-      // account for difference between Unix and Windows file paths
-      id = id.replace(/\\/g, '/');
-      id = id.replace(`${watchDirectory}/`, '');
-      id = id.match(/([^/]*\/[^/]*$)/g) ? id.match(/([^/]*\/[^/]*$)/g)[0] : id;
-      id = id.replace('\/', 'SLASH');
+      // // account for difference between Unix and Windows file paths
+      // id = id.replace(/\\/g, '/');
+      // id = id.replace(`${watchDirectory}/`, '');
+      // id = id.match(/([^/]*\/[^/]*$)/g) ? id.match(/([^/]*\/[^/]*$)/g)[0] : id;
+      // id = id.replace('\/', 'SLASH');
 
       document.querySelector(`#${id}`).style.fill = 'url(#eyeGradient)';
       break;

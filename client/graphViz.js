@@ -1,10 +1,18 @@
 import * as d3 from 'd3';
+import createLegend from './legend.js';
+import createColorPalette from './utils/createColorPalette.js';
 
-const graphViz = graph => {
+const graphViz = (fileTypes, graph) => {
+
+  const colorMap = createColorPalette(fileTypes);
+  console.log([...colorMap])
   console.log('graph', graph);
   var svg = d3.select('#graph'),
     width = +svg.attr('width'),
     height = +svg.attr('height');
+
+const legend = createLegend(svg, colorMap);
+console.log(legend);
 
   var simulation = d3
     .forceSimulation()
@@ -23,7 +31,7 @@ const graphViz = graph => {
     .selectAll('line')
     .data(graph.links)
     .enter()
-    .append('arrow');
+    .append('line');
 
   var node = svg
     .append('g')
@@ -32,7 +40,8 @@ const graphViz = graph => {
     .data(graph.nodes)
     .enter()
     .append('circle')
-    .attr('r', 5)
+    .attr('r', d => Math.log(d.size + 10))
+    .style('fill',  d => colorMap.get(d.fileType))
     .call(
       d3
         .drag()
@@ -65,7 +74,6 @@ const graphViz = graph => {
 
     node
       .attr('cx', function(d) {
-          console.log('d', d)
         return d.x;
       })
       .attr('cy', function(d) {
