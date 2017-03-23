@@ -1,5 +1,5 @@
 // import mikeViz from './mikeViz.js';
-import graphViz from './graphViz.js';
+import GraphViz from './GraphViz.js';
 import obj2dom from './utils/obj2dom.js';
 import obj2graph from './utils/obj2graph.js';
 import obj2hierarchy from './utils/obj2hierarchy.js';
@@ -21,8 +21,7 @@ ws.addEventListener('open', evt => {
 });
 
 let dirObject, objectHierarchy, watchDirectory;
-
-let graph, fileTypes; // = { nodes: [], links: [] };
+let graph, graphViz, fileTypes; // = { nodes: [], links: [] };
 let lastData;
 
 ws.addEventListener('message', evt => {
@@ -46,8 +45,10 @@ ws.addEventListener('message', evt => {
       console.log('obj2graph',obj2graph);
       [fileTypes, graph] = obj2graph(dirObject);
       console.log('dat graph', graph);
-      graphViz(fileTypes, graph);
+      graphViz = new GraphViz(fileTypes, graph);
 
+      // useful for testing
+      // document.addEventListener('click', () => graphViz.update())
       break;
 
     case 'watchDirectory':
@@ -56,13 +57,11 @@ ws.addEventListener('message', evt => {
       break;
 
     case 'change':
-      // if (lastData) {
-      //   graph.links.push({source: lastData, target: data.change});
-      // }
-      // graph.nodes.push({id: data.change});
-      // lastData = data.change;
+      if (lastData) {
+        graphViz.update(`root/${lastData}`, `root/${data.change}`)
+      }
+      lastData = data.change;
 
-      // console.log('this is a change', data, data);
       // let id = data.change.replace('.', 'DOT');
 
       // // account for difference between Unix and Windows file paths
@@ -71,10 +70,13 @@ ws.addEventListener('message', evt => {
       // id = id.match(/([^/]*\/[^/]*$)/g) ? id.match(/([^/]*\/[^/]*$)/g)[0] : id;
       // id = id.replace('\/', 'SLASH');
 
-      document.querySelector(`#${id}`).style.fill = 'url(#eyeGradient)';
+      // document.querySelector(`#${id}`).style.fill = 'url(#eyeGradient)';
       break;
 
     default:
       break;
   }
 });
+
+
+

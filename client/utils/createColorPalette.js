@@ -8,3 +8,6 @@ function createColorPalette(set) {
 }
 
 export default createColorPalette;
+
+
+

@@ -31,7 +31,7 @@
  */
 const FOLDER_SIZE = 1000;
 
-// THIS IS BAD PRACTICE 
+// THIS IS BAD PRACTICE
 const nodes = [];
 const links = [];
 
@@ -58,10 +58,22 @@ function extractNodes(parent, obj) {
       const fileType = key.match(/\.(.*$)/) ? key.match(/\.(.*$)/)[1] : key;
       fileTypes.add(fileType);
       nodes.push({ id: `${parent}/${key}`, size: val.size, fileType });
-      links.push({ source: parent, target: `${parent}/${key}` });
+      links.push({
+        source: parent,
+        target: `${parent}/${key}`,
+        linkType: 'filesystem',
+      });
     } else {
-      nodes.push({ id: `${parent}/${key}`, size: FOLDER_SIZE, fileType: 'folder' });
-      links.push({ source: parent, target: `${parent}/${key}` });
+      nodes.push({
+        id: `${parent}/${key}`,
+        size: FOLDER_SIZE,
+        fileType: 'folder',
+      });
+      links.push({
+        source: parent,
+        target: `${parent}/${key}`,
+        linkType: 'filesystem',
+      });
       extractNodes(`${parent}/${key}`, val);
     }
   });
