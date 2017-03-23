@@ -44,9 +44,7 @@ ws.addEventListener('message', evt => {
         objectHierarchy = obj2hierarchy(dirObject, null, options);
         // circlePack(objectHierarchy);
 
-        console.log('obj2graph', obj2graph);
         [fileTypes, graph] = obj2graph(dirObject);
-        console.log('dat graph', graph);
         graphViz = new GraphViz(fileTypes, graph);
 
         // useful for testing
@@ -64,9 +62,9 @@ ws.addEventListener('message', evt => {
         }
         lastData = data.change;
 
-        // let id = data.change.replace('.', 'DOT');
+        let id = data.change.replace('.', 'DOT');
 
-        // // account for difference between Unix and Windows file paths
+        // account for difference between Unix and Windows file paths
         // id = id.replace(/\\/g, '/');
         // id = id.replace(`${watchDirectory}/`, '');
         // id = id.match(/([^/]*\/[^/]*$)/g) ? id.match(/([^/]*\/[^/]*$)/g)[0] : id;

@@ -73,6 +73,3 @@ server.listen(5678, '0.0.0.0', () => {
   console.log(`websocket server listening on ${server.address().port}`);
 });
 /*__________________________________________________________________________*/
-// console.log(prettyjson.render(json));
-// // console.log(JSON.parse(fs.readFileSync('./server/stats.json', 'utf8')));
-// console.log(jsonfile.readFileSync('./server/stats.json'))
