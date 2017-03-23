@@ -15,12 +15,8 @@ I have got the basics working. Maybe not the best architecture, but things are w
 
 ## TODO
 **among many others**
-- [ ] parse roz_well.txt
-- [ ] d3 integration for all kinds of visualization
-- [ ] see what other stats chokidar might provide
-- [ ] search for require and import statements to build dependency graph
-- [ ] package everything up into an npm package, probably
-  - possibly a VS Code extension, but probably not
+- [ ] see what you can do with voronoi
+- [ ] package everything up into an electron app?
 - [ ] adjust package.json to be OS agnostic
   - Windows `%npm_package_config_watch_folder%`
   - Mac `$npm_package_config_watch_folder`
@@ -28,6 +24,3 @@ I have got the basics working. Maybe not the best architecture, but things are w
   - see [issue on Github](https://github.com/paulmillr/chokidar/issues/566)
 - [x] get webpack working for server file so I can use babel (and then use async await)
 - [ ] different behavior on mobile where you can more easily zoom by hand
-- [ ] 2 distinct modes
-  1. Flie Structure
-  1. Module Dependency Graph

@@ -57,7 +57,12 @@ function extractNodes(parent, obj) {
       // the only file I can think of without a file type is LICENSE, so we will make LICENSE its file type
       const fileType = key.match(/\.(.*$)/) ? key.match(/\.(.*$)/)[1] : key;
       fileTypes.add(fileType);
-      nodes.push({ id: `${parent}/${key}`, size: val.size, fileType });
+      nodes.push({
+        id: `${parent}/${key}`,
+        size: val.size,
+        fileType,
+        incoming: 0,
+      });
       links.push({
         source: parent,
         target: `${parent}/${key}`,
@@ -80,3 +85,6 @@ function extractNodes(parent, obj) {
 }
 
 export default obj2graph;
+
+
+

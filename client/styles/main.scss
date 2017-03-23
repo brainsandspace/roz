@@ -48,14 +48,15 @@
 
 .links {
   .filesystem {
-    stroke: #444;
+    stroke: steelblue;
     stroke-width: 5px;
-    stroke-opacity: 0.3;
+    stroke-opacity: 0.1;
     mix-blend-mode: exclusion; 
   }
 
   .change {
     stroke: black;
+    stroke-opacity:0.1;
     stroke-width: 2px;
   }
 }
@@ -67,8 +68,9 @@
 
 
 .nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
+  // stroke: #fff;
+  // stroke-width: 1.5px;
+  fill-opacity: 0.9;
 }
 
 #graph .nodes circle {
@@ -76,3 +78,4 @@
   cursor: pointer;
   stroke: none;
 }
+

@@ -76,7 +76,7 @@ class FileWatcher {
         parentDir[subDir] = this.pathToObj(
           parentDir[subDir],
           remainingString,
-          size
+          size,
         );
       }
       return parentDir;
@@ -99,7 +99,7 @@ class FileWatcher {
         this.broadcast({
           change: filename.replace(
             `${this.watchDirectory}${windows ? '\\' : '\/'}`,
-            ''
+            '',
           ),
         });
         // this.broadcast(filename);
@@ -119,7 +119,7 @@ class FileWatcher {
           this.broadcast({
             change: filename.replace(
               `${this.watchDirectory}${windows ? '\\' : '\/'}`,
-              ''
+              '',
             ),
           });
         } else {
@@ -146,6 +146,12 @@ class FileWatcher {
     this.socketConnections[id] = ws;
     ws.send(JSON.stringify({ initialDirObject: this.dirObject }));
     ws.send(JSON.stringify({ watchDirectory: this.watchDirectory }));
+
+    fs.readFile(`${this.watchDirectory}/roz_well.txt`, 'utf8', (err, data) => {
+      if (err) throw err;
+      console.log(data);
+      ws.send(data);
+    });
   }
 
   removeClient(id) {
